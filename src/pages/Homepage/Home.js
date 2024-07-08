@@ -1,9 +1,12 @@
 import React from "react";
+import Navbar from "../../components/Navbar";
+import HeroSection from "../../components/Home/HeroSection";
 
 const Home = (props) => {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Home page</h1>
+    <div className="">
+      <Navbar />
+      <HeroSection />
     </div>
   );
 };

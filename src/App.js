@@ -4,6 +4,7 @@ import Login from "./pages/Login/Login";
 import Services from "./pages/Services/Services";
 import SignUp from "./pages/SignUp/SignUp";
 import Staffs from "./pages/Staffs/Staffs";
+import ServiceDetails from "./pages/Services/ServiceDetails";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/services" element={<Services />} />
+      <Route path="/service-details/:id" element={<ServiceDetails />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/staffs" element={<Staffs />} />
     </Routes>

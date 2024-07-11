@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ServiceCard = ({ service }) => {
   return (
-    <div className="">
+    <Link to={`/service-details/${service._id}`} className="">
       <img
         src={service.image}
         alt={service.name}
@@ -11,7 +12,7 @@ const ServiceCard = ({ service }) => {
       <h3 className="text-center w-3/4 mx-auto font-bold text-base mt-3">
         {service.name}
       </h3>
-    </div>
+    </Link>
   );
 };
 

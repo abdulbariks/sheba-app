@@ -5,6 +5,7 @@ import Services from "./pages/Services/Services";
 import SignUp from "./pages/SignUp/SignUp";
 import Staffs from "./pages/Staffs/Staffs";
 import ServiceDetails from "./pages/Services/ServiceDetails";
+import StaffDetails from "./pages/Staffs/StaffDetails";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/service-details/:id" element={<ServiceDetails />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/staffs" element={<Staffs />} />
+      <Route path="/staff-details/:id" element={<StaffDetails />} />
     </Routes>
   );
 }

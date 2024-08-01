@@ -1,16 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "./../../components/Navbar";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 const Login = (props) => {
+  const [LogInEorr, setLogInEorr] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => processLogin(data);
+
+  const processLogin = (data) => {
+    const formData = {
+      email: data.email,
+      password: data.password,
+    };
+
+    const btn = document.getElementById("login_btn");
+    btn.innerText = "Processing Login...";
+    btn.disabled = true;
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+        const result = await response.json();
+        if (result.status) {
+          setLogInEorr("");
+          document.getElementById("login_form").reset();
+          btn.innerText = "Login";
+          btn.disabled = false;
+        } else {
+          setLogInEorr(result.message);
+          document.getElementById("login_form").reset();
+          btn.innerText = "Login";
+          btn.disabled = false;
+        }
+        console.log(result);
+      } catch (err) {
+        fetchData();
+      }
+    };
+    fetchData();
+  };
   return (
     <div>
       <Navbar />
@@ -51,6 +91,7 @@ const Login = (props) => {
               Register as User
             </Link>
           </p>
+          <p className="my-4 text-rose-800">{LogInEorr}</p>
           <button
             id="login_btn"
             type="submit"

@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import Navbar from "../../components/Navbar";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const SignUp = (props) => {
+  const { setUser } = useAuth();
+  const navigate = useNavigate();
   const [signUpEorr, setSignUpEorr] = useState("");
   const {
     register,
@@ -36,7 +39,10 @@ const SignUp = (props) => {
         });
         const result = await response.json();
         if (result.status) {
+          setUser(result.status);
+          localStorage.setItem("uId", result.user._id);
           setSignUpEorr("");
+          result.user.role = "user" && navigate("/services");
           document.getElementById("sign_up_form").reset();
           btn.innerText = "Register";
           btn.disabled = false;

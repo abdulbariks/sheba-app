@@ -1,9 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./../../components/Navbar";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const Login = (props) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const { user, setUser } = useAuth();
+
+  useEffect(() => {
+    user?.email && navigate(from, { replace: true });
+  }, [from, navigate, user?.email]);
+
   const [LogInEorr, setLogInEorr] = useState("");
   const {
     register,
@@ -34,7 +44,10 @@ const Login = (props) => {
         });
         const result = await response.json();
         if (result.status) {
+          setUser(result.user);
+          localStorage.setItem("uId", result.user._id);
           setLogInEorr("");
+          result.user.role = "user" && navigate("/services");
           document.getElementById("login_form").reset();
           btn.innerText = "Login";
           btn.disabled = false;
@@ -44,7 +57,6 @@ const Login = (props) => {
           btn.innerText = "Login";
           btn.disabled = false;
         }
-        console.log(result);
       } catch (err) {
         fetchData();
       }

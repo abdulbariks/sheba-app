@@ -90,7 +90,6 @@ const ServiceDetails = (props) => {
   ];
 
   const service = services.find((service) => service._id === id);
-  console.log(service);
   const staffs = [
     {
       _id: "1",

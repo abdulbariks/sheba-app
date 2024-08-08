@@ -48,6 +48,8 @@ const Login = (props) => {
           localStorage.setItem("uId", result.user._id);
           setLogInEorr("");
           result.user.role = "user" && navigate("/services");
+          result.user.role = "admin" && navigate("/admin");
+          result.user.role = "staff" && navigate("/staff");
           document.getElementById("login_form").reset();
           btn.innerText = "Login";
           btn.disabled = false;

@@ -5,7 +5,7 @@ import useAuth from "../hooks/useAuth";
 
 const Navbar = (props) => {
   const { user } = useAuth();
-  console.log(user.email);
+  console.log(user.role);
 
   return (
     <div className="bg-white h-20 md:h-16 sticky top-0 shadow-md z-10">
@@ -60,7 +60,7 @@ const Navbar = (props) => {
                   Admin
                 </NavLink>
               )}
-              {user.role === "staff" && (
+              {/* {user.role === "staff" && (
                 <NavLink
                   to="/staff"
                   className={({ isActive }) =>
@@ -71,7 +71,7 @@ const Navbar = (props) => {
                 >
                   Staff
                 </NavLink>
-              )}
+              )} */}
             </>
           ) : (
             <NavLink

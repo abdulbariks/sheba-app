@@ -9,6 +9,8 @@ import StaffDetails from "./pages/Staffs/StaffDetails";
 import AuthProvider from "./context/AuthProvider";
 import PrivateOutlet from "./components/PrivateOutlet";
 import Dashboard from "./pages/Dashboard/dashboard";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import StaffDashboard from "./pages/Staff/StaffDashboard";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
 
         <Route path="/" element={<PrivateOutlet />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/staff" element={<StaffDashboard />} />
         </Route>
       </Routes>
     </AuthProvider>

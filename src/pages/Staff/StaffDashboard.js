@@ -3,20 +3,22 @@ import Navbar from "../../components/Navbar";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
-const Dashboard = (props) => {
+const StaffDashboard = (props) => {
   const { user, logOut } = useAuth();
+  console.log(user.role);
+
   const navigate = useNavigate();
   useEffect(() => {
     user.role = "user" && navigate("/dashboard");
     user.role = "admin" && navigate("/admin");
     user.role = "staff" && navigate("/staff");
-  }, [user.role, navigate, user]);
+  }, [navigate, user.role, user]);
   return (
     <div>
       <Navbar />
       <div className="container mx-auto p-2">
         <div className="">
-          <h1>Dashboard</h1>
+          <h1>Staff Dashboard</h1>
           <h1>
             Your Name:
             <span className="text-sky-600 capitalize">{user.name}</span>
@@ -41,4 +43,4 @@ const Dashboard = (props) => {
   );
 };
 
-export default Dashboard;
+export default StaffDashboard;

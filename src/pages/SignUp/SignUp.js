@@ -39,8 +39,8 @@ const SignUp = (props) => {
         });
         const result = await response.json();
         if (result.status) {
-          setUser(result.status);
           localStorage.setItem("uId", result.user._id);
+          setUser(result.user);
           setSignUpEorr("");
           result.user.role = "user" && navigate("/services");
           document.getElementById("sign_up_form").reset();

@@ -11,6 +11,7 @@ import PrivateOutlet from "./components/PrivateOutlet";
 import Dashboard from "./pages/Dashboard/dashboard";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import StaffDashboard from "./pages/Staff/StaffDashboard";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const useCredential = () => {
   const id = localStorage.getItem("uId");
   const [user, setUser] = useState({});
-  // console.log(user);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     if (id) {
@@ -29,9 +30,30 @@ const useCredential = () => {
     setUser({});
   };
 
+  //Get All Users
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/users");
+        const result = await response.json();
+
+        if (result) {
+          setUsers(result.users);
+        } else {
+          toast.error(`${result.message}`);
+        }
+      } catch (err) {
+        toast.error(`${err}`);
+      }
+    };
+    fetchData();
+  }, [setUsers]);
+
   return {
     user,
     setUser,
+    users,
+    setUsers,
     logOut,
   };
 };

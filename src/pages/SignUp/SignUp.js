@@ -38,20 +38,19 @@ const SignUp = (props) => {
           body: JSON.stringify(formData),
         });
         const result = await response.json();
+        console.log(result);
+
         if (result.status) {
           localStorage.setItem("uId", result.user._id);
           setUser(result.user);
           setSignUpEorr("");
-          result.user.role = "user" && navigate("/services");
-          document.getElementById("sign_up_form").reset();
-          btn.innerText = "Register";
-          btn.disabled = false;
         } else {
           setSignUpEorr(result.message);
-          document.getElementById("sign_up_form").reset();
-          btn.innerText = "Register";
-          btn.disabled = false;
         }
+        navigate("/services");
+        document.getElementById("sign_up_form").reset();
+        btn.innerText = "Register";
+        btn.disabled = false;
       } catch (err) {
         fetchData();
       }

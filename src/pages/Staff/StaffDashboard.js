@@ -5,14 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 const StaffDashboard = (props) => {
   const { user, logOut } = useAuth();
-  console.log(user.role);
-
-  const navigate = useNavigate();
-  useEffect(() => {
-    user.role = "user" && navigate("/dashboard");
-    user.role = "admin" && navigate("/admin");
-    user.role = "staff" && navigate("/staff");
-  }, [navigate, user.role, user]);
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   user.role = "user" && navigate("/dashboard");
+  //   user.role = "admin" && navigate("/admin");
+  //   user.role = "staff" && navigate("/staff");
+  // }, [navigate, user.role, user]);
   return (
     <div>
       <Navbar />

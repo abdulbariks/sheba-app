@@ -60,7 +60,7 @@ const Navbar = (props) => {
                   Admin
                 </NavLink>
               )}
-              {/* {user.role === "staff" && (
+              {user.role === "staff" && (
                 <NavLink
                   to="/staff"
                   className={({ isActive }) =>
@@ -71,7 +71,7 @@ const Navbar = (props) => {
                 >
                   Staff
                 </NavLink>
-              )} */}
+              )}
             </>
           ) : (
             <NavLink

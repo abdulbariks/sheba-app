@@ -5,6 +5,7 @@ const useCredential = () => {
   const id = localStorage.getItem("uId");
   const [user, setUser] = useState({});
   const [users, setUsers] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     if (id) {
@@ -30,7 +31,7 @@ const useCredential = () => {
     setUser({});
   };
 
-  //Get All Users
+  //Fetch All Users
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,12 +50,33 @@ const useCredential = () => {
     fetchData();
   }, [setUsers]);
 
+  //Fetch Categoty
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/categories");
+        const result = await response.json();
+
+        if (result) {
+          setCategories(result.categories);
+        } else {
+          toast.error(`${result.message}`);
+        }
+      } catch (err) {
+        toast.error(`${err}`);
+      }
+    };
+    fetchData();
+  }, [setUsers]);
+
   return {
     user,
     setUser,
     users,
     setUsers,
     logOut,
+    categories,
+    setCategories,
   };
 };
 

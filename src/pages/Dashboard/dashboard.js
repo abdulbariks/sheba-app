@@ -7,6 +7,8 @@ import CreateUser from "../../components/Admin/UserModule/CreateUser";
 import ViewUsers from "../../components/Admin/UserModule/ViewUsers";
 import ViewCategory from "../../components/Admin/CategoryModule/ViewCategory";
 import CreateCategory from "../../components/Admin/CategoryModule/CreateCategory";
+import ViewSlot from "../../components/Admin/SlotModule/ViewSlot";
+import CreateSlot from "../../components/Admin/SlotModule/CreateSlot";
 
 const Dashboard = (props) => {
   const { user, logOut } = useAuth();
@@ -55,6 +57,13 @@ const Dashboard = (props) => {
             </h2>
             <CreateCategory />
             <ViewCategory />
+          </div>
+          <div className="min-w-full shadow rounded border border-gray-400">
+            <h2 className="flex items-center jus bg-slate-600 text-white p-2">
+              Slot Module
+            </h2>
+            <CreateSlot />
+            <ViewSlot />
           </div>
         </div>
       </div>

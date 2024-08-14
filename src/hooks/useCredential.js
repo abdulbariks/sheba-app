@@ -6,6 +6,7 @@ const useCredential = () => {
   const [user, setUser] = useState({});
   const [users, setUsers] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [slots, setSlots] = useState([]);
 
   useEffect(() => {
     if (id) {
@@ -67,7 +68,26 @@ const useCredential = () => {
       }
     };
     fetchData();
-  }, [setUsers]);
+  }, [setCategories]);
+
+  //Fetch Slot
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/slots");
+        const result = await response.json();
+
+        if (result) {
+          setSlots(result.slots);
+        } else {
+          toast.error(`${result.message}`);
+        }
+      } catch (err) {
+        toast.error(`${err}`);
+      }
+    };
+    fetchData();
+  }, [setSlots]);
 
   return {
     user,
@@ -77,6 +97,8 @@ const useCredential = () => {
     logOut,
     categories,
     setCategories,
+    slots,
+    setSlots,
   };
 };
 

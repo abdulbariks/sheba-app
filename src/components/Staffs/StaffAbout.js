@@ -131,7 +131,6 @@ const StaffAbout = ({ staff }) => {
       )
     ),
   ];
-  console.log(categories);
   function formatTime(timeString) {
     const [hours, minutes] = timeString.split(":");
     const formattedHours = hours % 12 || 12;

@@ -7,6 +7,7 @@ const useCredential = () => {
   const [users, setUsers] = useState([]);
   const [categories, setCategories] = useState([]);
   const [slots, setSlots] = useState([]);
+  const [services, setServices] = useState([]);
 
   useEffect(() => {
     if (id) {
@@ -89,6 +90,25 @@ const useCredential = () => {
     fetchData();
   }, [setSlots]);
 
+  //Fetch Service
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/services");
+        const result = await response.json();
+
+        if (result) {
+          setServices(result.services);
+        } else {
+          toast.error(`${result.message}`);
+        }
+      } catch (err) {
+        toast.error(`${err}`);
+      }
+    };
+    fetchData();
+  }, [setServices]);
+
   return {
     user,
     setUser,
@@ -99,6 +119,8 @@ const useCredential = () => {
     setCategories,
     slots,
     setSlots,
+    services,
+    setServices,
   };
 };
 

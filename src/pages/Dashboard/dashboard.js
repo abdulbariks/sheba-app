@@ -11,6 +11,8 @@ import ViewSlot from "../../components/Admin/SlotModule/ViewSlot";
 import CreateSlot from "../../components/Admin/SlotModule/CreateSlot";
 import CreateService from "../../components/Admin/ServiceModule/CreateService";
 import ViewService from "../../components/Admin/ServiceModule/ViewService";
+import CreateStaff from "../../components/Admin/StaffModule/CreateStaff";
+import ViewStaff from "../../components/Admin/StaffModule/ViewStaff";
 
 const Dashboard = (props) => {
   const { user, logOut } = useAuth();
@@ -73,6 +75,13 @@ const Dashboard = (props) => {
             </h2>
             <CreateService />
             <ViewService />
+          </div>
+          <div className="min-w-full shadow rounded border border-gray-400">
+            <h2 className="flex items-center jus bg-slate-600 text-white p-2">
+              Staff Module
+            </h2>
+            <CreateStaff />
+            <ViewStaff />
           </div>
         </div>
       </div>

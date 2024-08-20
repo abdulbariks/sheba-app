@@ -34,7 +34,7 @@ const Navbar = (props) => {
           >
             Staffs
           </NavLink>
-          {user.email ? (
+          {user ? (
             <>
               {user.role === "user" && (
                 <NavLink

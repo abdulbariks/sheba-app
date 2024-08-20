@@ -26,8 +26,8 @@ function App() {
         <Route path="/staff-details/:id" element={<StaffDetails />} />
 
         <Route path="/" element={<PrivateOutlet />}>
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/staff" element={<StaffDashboard />} />
         </Route>
       </Routes>

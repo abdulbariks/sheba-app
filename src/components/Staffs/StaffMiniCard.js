@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const StaffMiniCard = ({ staff }) => {
+  const navigate = useNavigate();
   return (
     <div className="bg-gray-50 border hover:border-sky-800 rounded-md shadow-md p-2">
       <div className="items-center">
@@ -20,7 +22,12 @@ const StaffMiniCard = ({ staff }) => {
           <button className="bg-green-800 hover:bg-green-950 text-white rounded-full text-xs flex items-center py-2 px-3 my-2 mx-auto">
             Book Now
           </button>
-          <button className="bg-sky-800 hover:bg-sky-950 text-white rounded-full text-xs flex items-center py-2 px-3 my-2 mx-auto">
+          <button
+            onClick={() => {
+              navigate(`/staff-details/${staff._id}`);
+            }}
+            className="bg-sky-800 hover:bg-sky-950 text-white rounded-full text-xs flex items-center py-2 px-3 my-2 mx-auto"
+          >
             View full Profile
           </button>
         </div>

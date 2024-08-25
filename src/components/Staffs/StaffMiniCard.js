@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BookingModal from "../Booking/BookingModal";
 
 const StaffMiniCard = ({ staff }) => {
   const navigate = useNavigate();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div className="bg-gray-50 border hover:border-sky-800 rounded-md shadow-md p-2">
       <div className="items-center">
@@ -19,7 +28,10 @@ const StaffMiniCard = ({ staff }) => {
           </h3>
         </div>
         <div className="flex lg:block xl:flex items-center justify-between mt-3">
-          <button className="bg-green-800 hover:bg-green-950 text-white rounded-full text-xs flex items-center py-2 px-3 my-2 mx-auto">
+          <button
+            onClick={openModal}
+            className="bg-green-800 hover:bg-green-950 text-white rounded-full text-xs flex items-center py-2 px-3 my-2 mx-auto"
+          >
             Book Now
           </button>
           <button
@@ -32,6 +44,19 @@ const StaffMiniCard = ({ staff }) => {
           </button>
         </div>
       </div>
+      <BookingModal isOpen={isModalOpen} onClose={closeModal}>
+        <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t ">
+          <h3 className="text-lg font-semibold text-gray-900">
+            Available Service Slots
+          </h3>
+          <button
+            onClick={closeModal}
+            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center"
+          >
+            X
+          </button>
+        </div>
+      </BookingModal>
     </div>
   );
 };

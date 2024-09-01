@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./../../components/Navbar";
 import { useParams } from "react-router-dom";
 import StaffAbout from "../../components/Staffs/StaffAbout";
@@ -7,10 +7,28 @@ import useAuth from "../../hooks/useAuth";
 
 const StaffDetails = (props) => {
   const { id } = useParams();
-  const { staffs } = useAuth();
+  const { staff, setStaff } = useAuth();
 
-  const staff = staffs.find((staff) => staff._id === id);
+  // const staff = staffs.find((staff) => staff._id === id);
+  useEffect(() => {
+    if (!staff.name) {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`http://localhost:5000/staff/${id}`);
+          const result = await response.json();
 
+          if (result.status) {
+            setStaff(result.staff);
+          } else {
+            console.log(result);
+          }
+        } catch (err) {
+          fetchData();
+        }
+      };
+      fetchData();
+    }
+  }, [staff.name, id, setStaff]);
   const [toggle, setToggle] = useState(false);
   const [tab, setTab] = useState("About");
   const handleTabChange = (tabName) => {
@@ -37,7 +55,7 @@ const StaffDetails = (props) => {
             <h3 className="text-sm font-bold">{staff.bio}</h3>
             <h3 className="text-gray-800 text-xs">{staff.location}</h3>
             <h4 className="text-sm text-gray-800">
-              ${Number(staff.rate).toLocaleString()}
+              ${Number(staff.rate || 0).toLocaleString()}
             </h4>
           </div>
         </div>
@@ -59,8 +77,10 @@ const StaffDetails = (props) => {
             Ratings and Reviews
           </button>
         </div>
-        {tab === "About" && <StaffAbout key={staff._id} staff={staff} />}
-        {tab === "Review" && <StaffReview />}
+        {staff.name && tab === "About" && (
+          <StaffAbout key={staff._id} staff={staff} />
+        )}
+        {staff.name && tab === "Review" && <StaffReview />}
       </div>
     </div>
   );

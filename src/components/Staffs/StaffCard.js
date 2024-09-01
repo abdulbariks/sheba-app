@@ -1,8 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const StaffCard = ({ staff }) => {
   const navigate = useNavigate();
+
+  const { setStaff } = useAuth();
 
   return (
     <div className="bg-gray-50 border hover:border-sky-800 rounded-md shadow-md p-5">
@@ -47,6 +50,7 @@ const StaffCard = ({ staff }) => {
       </div>
       <button
         onClick={() => {
+          setStaff(staff);
           navigate(`/staff-details/${staff._id}`);
         }}
         className="bg-sky-800 hover:bg-sky-950 text-white rounded-full text-xs  py-2 px-3 my-2 mx-auto"

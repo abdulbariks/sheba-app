@@ -4,14 +4,13 @@ import useAuth from "./../../hooks/useAuth";
 const StaffAbout = ({ staff }) => {
   const { slots, services } = useAuth();
 
-  const categories = [
-    ...new Set(
-      staff.services.map(
-        (staffServiceName) =>
-          services.find((service) => service.name === staffServiceName).category
-      )
-    ),
-  ];
+  const staffCategories = staff.services.map(
+    (staffServiceName) =>
+      (services.find((service) => service.name === staffServiceName) || {})
+        .category || "No Category Found!"
+  );
+  const categories = [...new Set(staffCategories)];
+
   function formatTime(timeString) {
     const [hours, minutes] = timeString.split(":");
     const formattedHours = hours % 12 || 12;
@@ -39,17 +38,21 @@ const StaffAbout = ({ staff }) => {
           <div className="bg-white border rounded-md p-5 w-full md-w-11/12 mt-5">
             <h1 className="text-xl font-bold">Service Slots</h1>
             <div className="divide-y divide-slate-200 mt-5">
-              {slots.map((slot) => (
-                <div
-                  key={slot._id}
-                  className="grid grid-cols-2 items-center content-between"
-                >
-                  <div className="text-sm py-2 text-gray-600">{slot.label}</div>
-                  <div className="text-sm py-2 text-end text-gray-600">
-                    {formatTime(slot.start_time)} - {formatTime(slot.end_time)}
+              {slots.length > 0 &&
+                slots.map((slot) => (
+                  <div
+                    key={slot._id}
+                    className="grid grid-cols-2 items-center content-between"
+                  >
+                    <div className="text-sm py-2 text-gray-600">
+                      {slot.label}
+                    </div>
+                    <div className="text-sm py-2 text-end text-gray-600">
+                      {formatTime(slot.start_time)} -{" "}
+                      {formatTime(slot.end_time)}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>
@@ -61,27 +64,29 @@ const StaffAbout = ({ staff }) => {
           <div className="bg-white border rounded-md p-5 mt-5">
             <h2 className="text-xl font-bold">Categories</h2>
             <div className="mt-5 flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <p
-                  className="text-sm mr-2 p-2 rounded-full border  border-gray-300"
-                  key={category}
-                >
-                  {category}
-                </p>
-              ))}
+              {categories.length > 0 &&
+                categories.map((category) => (
+                  <p
+                    className="text-sm mr-2 p-2 rounded-full border  border-gray-300"
+                    key={category}
+                  >
+                    {category}
+                  </p>
+                ))}
             </div>
           </div>
           <div className="bg-white border rounded-md p-5 mt-5">
             <h2 className="text-xl font-bold">Services</h2>
             <div className="mt-5 flex flex-wrap gap-2">
-              {staff.services.map((service) => (
-                <p
-                  className="text-sm mr-2 p-2 rounded-full border  border-gray-300"
-                  key={service}
-                >
-                  {service}
-                </p>
-              ))}
+              {staff.services.length > 0 &&
+                staff.services.map((service) => (
+                  <p
+                    className="text-sm mr-2 p-2 rounded-full border  border-gray-300"
+                    key={service}
+                  >
+                    {service}
+                  </p>
+                ))}
             </div>
           </div>
         </div>

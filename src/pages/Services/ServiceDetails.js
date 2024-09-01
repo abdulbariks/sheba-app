@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import { useParams } from "react-router-dom";
 import StaffMiniCard from "../../components/Staffs/StaffMiniCard";
@@ -6,10 +6,28 @@ import useAuth from "../../hooks/useAuth";
 
 const ServiceDetails = (props) => {
   const { id } = useParams();
-  const { services, staffs } = useAuth();
+  const { service, staffs, setService } = useAuth();
 
-  const service = services.find((service) => service._id === id);
+  // const service = services.find((service) => service._id === id);
+  useEffect(() => {
+    if (!service.name) {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`http://localhost:5000/service/${id}`);
+          const result = await response.json();
 
+          if (result.status) {
+            setService(result.service);
+          } else {
+            console.log(result);
+          }
+        } catch (err) {
+          fetchData();
+        }
+      };
+      fetchData();
+    }
+  }, [service.name, id, setService]);
   return (
     <div>
       <Navbar />

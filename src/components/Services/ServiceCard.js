@@ -1,9 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const ServiceCard = ({ service }) => {
+  const { setService } = useAuth();
   return (
-    <Link to={`/service-details/${service._id}`} className="">
+    <Link
+      to={`/service-details/${service._id}`}
+      onClick={() => setService(service)}
+    >
       <img
         src={service.image}
         alt={service.name}

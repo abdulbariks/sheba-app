@@ -9,6 +9,9 @@ const useCredential = () => {
   const [slots, setSlots] = useState([]);
   const [services, setServices] = useState([]);
   const [staffs, setStaffs] = useState([]);
+  const [service, setService] = useState({});
+  const [staff, setStaff] = useState({});
+  const [slot, setSlot] = useState({});
 
   useEffect(() => {
     if (id) {
@@ -143,6 +146,12 @@ const useCredential = () => {
     setServices,
     staffs,
     setStaffs,
+    service,
+    setService,
+    staff,
+    setStaff,
+    slot,
+    setSlot,
   };
 };
 

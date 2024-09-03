@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import useAuth from "./../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const BookingModal = ({ isOpen, onClose, children }) => {
-  const [bookingError] = useState("");
+  const [bookingError, setBookingErrror] = useState("");
   const { slots, user, service, staff, slot, setSlot } = useAuth();
   const navigate = useNavigate();
-  console.log(slot);
 
   function formatTime(timeString) {
     const [hours, minutes] = timeString.split(":");
@@ -15,12 +15,17 @@ const BookingModal = ({ isOpen, onClose, children }) => {
     return `${formattedHours}:${minutes} ${period}`;
   }
 
-  const bookNow = () => {
+  // console.log(slot);
+
+  const bookNow = async () => {
     if (user.email) {
       if (slot.label) {
         const btn = document.getElementById("pay_now");
         btn.innerText = "Processing Payment...";
         btn.disabled = true;
+
+        const trx_id = await generateTransactionId();
+
         const formData = {
           date: new Date().toISOString().split("T")[0],
           email: user.email,
@@ -28,14 +33,49 @@ const BookingModal = ({ isOpen, onClose, children }) => {
           service,
           staff,
           slot,
+          trx_id,
           status: "Pending",
         };
+
         console.log(formData);
+
+        const ferchData = async () => {
+          try {
+            const response = await fetch("http://localhost:5000/booking", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+            const result = await response.json();
+            if (result.status) {
+              console.log(result);
+              toast.success(`${result.message}`);
+              btn.innerText = "Pay Now";
+              btn.disabled = false;
+            } else {
+              setBookingErrror(result.message);
+              btn.innerText = "Pay Now";
+              btn.disabled = false;
+            }
+          } catch (err) {
+            ferchData();
+          }
+        };
+        ferchData();
       }
     } else {
       navigate("/login");
     }
   };
+
+  async function generateTransactionId(prefix = "TX") {
+    const timeStamp = Date.now();
+    const randomNumber = Math.floor(Math.random() * 9000) + 100;
+    const transactionId = `${prefix}-${timeStamp}-${randomNumber}`;
+    return transactionId;
+  }
 
   return (
     <div
@@ -56,9 +96,13 @@ const BookingModal = ({ isOpen, onClose, children }) => {
               slots.map((slot) => (
                 <li key={slot._id}>
                   <input
-                    onChangeCapture={(e) => {
+                    onClick={() => {
+                      setBookingErrror("");
                       setSlot(slot);
                     }}
+                    // onChangeCapture={(e) => {
+                    //   setSlot(slot);
+                    // }}
                     type="'radio"
                     id={`slot-${slot._id}`}
                     name="slot"
@@ -86,6 +130,7 @@ const BookingModal = ({ isOpen, onClose, children }) => {
               ))}
           </ul>
           <button
+            type="submit"
             id="pay_now"
             onClick={bookNow}
             className="text-white inline-flex  w-full justify-center bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-400 

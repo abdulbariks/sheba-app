@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useAuth from "./../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 const BookingModal = ({ isOpen, onClose, children }) => {
   const [bookingError, setBookingErrror] = useState("");
@@ -50,10 +50,11 @@ const BookingModal = ({ isOpen, onClose, children }) => {
             });
             const result = await response.json();
             if (result.status) {
-              console.log(result);
-              toast.success(`${result.message}`);
-              btn.innerText = "Pay Now";
-              btn.disabled = false;
+              // console.log(result);
+              // toast.success(`${result.message}`);
+              // btn.innerText = "Pay Now";
+              // btn.disabled = false;
+              payNow(staff.rate, trx_id);
             } else {
               setBookingErrror(result.message);
               btn.innerText = "Pay Now";
@@ -76,6 +77,25 @@ const BookingModal = ({ isOpen, onClose, children }) => {
     const transactionId = `${prefix}-${timeStamp}-${randomNumber}`;
     return transactionId;
   }
+
+  const payNow = (amount, trx_id) => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/pay/${amount}/${trx_id}`
+        );
+        const result = await response.json();
+        if (result.status) {
+          window.location.replace(`${result.payment_link}`);
+        } else {
+          console.log(result);
+        }
+      } catch (err) {
+        fetchData();
+      }
+    };
+    fetchData();
+  };
 
   return (
     <div
